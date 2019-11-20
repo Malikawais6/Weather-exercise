@@ -9,7 +9,8 @@ import { getWeather } from "../actions/action-fetch";
 import { CardComponent } from "../components/Card/CardComponent";
 import { TempConverter } from "../components/TempConverter/TempConverter";
 import { BarChart } from "../components/BarChart/BarChart";
-import { getDate } from "../utils";
+import { getDate, settings } from "../utils";
+import { WeatherComponentStyle } from "./WeatherContainer.style";
 
 const WeatherContainer = props => {
   const { dispatch, isLoading, weather } = props;
@@ -21,6 +22,7 @@ const WeatherContainer = props => {
   const date = list.map(item => {
     return getDate(item.dt_txt);
   });
+
   const formattedDate = uniq(date);
 
   const formattedTemp = formattedDate.reduce((acc, currDate) => {
@@ -28,9 +30,9 @@ const WeatherContainer = props => {
       .map(tempObj => {
         if (includes(currDate, tempObj.dt_txt)) {
           if (degree === "C") {
-            return tempObj.main.temp;
+            return Math.round(tempObj.main.temp);
           } else {
-            return (tempObj.main.temp * 9) / 5 + 32;
+            return Math.round((tempObj.main.temp * 9) / 5 + 32);
           }
         } else {
           return;
@@ -52,23 +54,11 @@ const WeatherContainer = props => {
     dispatch(getWeather());
   }, []);
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1
-  };
-
   if (isLoading) {
-    return (
-      <div>
-        <div> Loading!! </div>
-      </div>
-    );
+    return <img src="/images/loading.gif" />;
   }
   return (
-    <div>
+    <WeatherComponentStyle>
       <TempConverter degree={degree} setDegree={setDegree} />
       <Slider {...settings}>
         {formattedTemp.map((item, index) => {
@@ -84,6 +74,7 @@ const WeatherContainer = props => {
                   degree={degree}
                   date={item.date}
                   avgTemp={item.avgTemp}
+                  className="carousel-card"
                 />
               </div>
 
@@ -103,7 +94,7 @@ const WeatherContainer = props => {
           );
         })}
       </Slider>
-    </div>
+    </WeatherComponentStyle>
   );
 };
 

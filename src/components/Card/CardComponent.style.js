@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const CardStyled = styled.div`
   width: 300px;
+  margin: auto;
+
   .wrapper {
     display: grid;
     grid-template-columns: repeat(1, 1fr);

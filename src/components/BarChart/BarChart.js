@@ -7,17 +7,14 @@ const options = {
     type: "column"
   },
   title: {
-    text: "Day Temperature"
+    text: ""
   },
   subtitle: {
     text: ""
   },
   xAxis: {},
   yAxis: {
-    min: 0,
-    title: {
-      text: ""
-    }
+    visible: false
   },
   tooltip: {},
   plotOptions: {
