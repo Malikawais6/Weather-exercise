@@ -62,7 +62,6 @@ const WeatherContainer = props => {
       <TempConverter degree={degree} setDegree={setDegree} />
       <Slider {...settings}>
         {formattedTemp.map((item, index) => {
-          console.log("settings", settings);
           return (
             <div>
               <div
